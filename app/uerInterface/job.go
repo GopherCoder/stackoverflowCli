@@ -2,7 +2,6 @@ package uerInterface
 
 import (
 	"bytes"
-	"fmt"
 	"stackOverFlowClient/app/domain/model"
 	"stackOverFlowClient/app/infrastructure"
 	"strings"
@@ -14,11 +13,14 @@ type Job struct {
 	model.Job
 }
 
+type JobResult []Job
+
 func (j *Job) FindAll(url string) (interface{}, error) {
 	response, _ := infrastructure.ResponseStorager(url)
 
 	//fmt.Println(string([]byte(response)))
 
+	var jobResult JobResult
 	doc, _ := goquery.NewDocumentFromReader(bytes.NewReader(response))
 
 	doc.Find("div.listResults div div.-job-summary").Each(func(i int, selection *goquery.Selection) {
@@ -46,9 +48,21 @@ func (j *Job) FindAll(url string) (interface{}, error) {
 			jobTags += " " + strings.TrimSpace(selection3.Text())
 
 		})
-		fmt.Println("title", jobTitle, "date", jobDate, "description", jobDescription, "salary", jobSalary, "tags", jobTags)
-	})
+		//fmt.Println("title", jobTitle, "date", jobDate, "description", jobDescription, "salary", jobSalary, "tags", jobTags)
+		if i < 10 || len(jobResult) >= 10 {
+			oneJob := Job{
+				*model.NewJob(jobTitle,
+					jobDate,
+					jobTags,
+					jobSalary,
+					jobDescription),
+			}
+			jobResult = append(jobResult, oneJob)
 
+		}
+
+	})
+	infrastructure.Marshal(jobResult)
 	return nil, nil
 }
 

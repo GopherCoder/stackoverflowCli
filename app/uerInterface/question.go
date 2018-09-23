@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"stackOverFlowClient/app/domain/model"
 	"stackOverFlowClient/app/infrastructure"
+	"strconv"
 	"strings"
 
 	"github.com/PuerkitoBio/goquery"
@@ -14,9 +15,13 @@ type Question struct {
 	model.Question
 }
 
+type QuestionResult []Question
+
 func (q *Question) FindAll(url string) (interface{}, error) {
 	response, _ := infrastructure.ResponseStorager(url)
 	//fmt.Println(string([]byte(response)))
+
+	var questionResult QuestionResult
 	doc, _ := goquery.NewDocumentFromReader(bytes.NewReader(response))
 	doc.Find("div.flush-left.js-search-results div.question-summary.search-result").Each(func(i int, selection *goquery.Selection) {
 		votes := strings.TrimSpace(selection.Find(".statscontainer .stats").Find("div.vote").Text())
@@ -34,9 +39,16 @@ func (q *Question) FindAll(url string) (interface{}, error) {
 			questionType = "ask"
 		}
 		fmt.Println(newVotes, title, description, information, questionType, fullUrl)
+		newVotesInt, _ := strconv.Atoi(newVotes)
+		if i <= 10 && len(questionResult) <= 10 {
+			oneQuestion := Question{
+				*model.NewQuestion(newVotesInt, questionType, title, fullUrl, description, information),
+			}
+			questionResult = append(questionResult, oneQuestion)
+		}
 
 	})
-
+	infrastructure.Marshal(questionResult)
 	return nil, nil
 }
 

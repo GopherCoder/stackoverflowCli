@@ -2,7 +2,6 @@ package uerInterface
 
 import (
 	"bytes"
-	"fmt"
 	"stackOverFlowClient/app/domain/model"
 	"stackOverFlowClient/app/infrastructure"
 	"stackOverFlowClient/app/infrastructure/errors"
@@ -14,7 +13,7 @@ type Reputation struct {
 	model.Reputation
 }
 
-type Reputations []Reputation
+type ReputationResult []Reputation
 
 func (r *Reputation) FindAll(url string) (interface{}, error) {
 	// 1. one step : get response
@@ -23,6 +22,7 @@ func (r *Reputation) FindAll(url string) (interface{}, error) {
 		return nil, &errors.ErrorResponse
 	}
 
+	var reputationResult ReputationResult
 	// 2. two step : get content
 	doc, _ := goquery.NewDocumentFromReader(bytes.NewReader(response))
 	doc.Find("#user-browser > div > div").Each(func(i int, selection *goquery.Selection) {
@@ -34,11 +34,17 @@ func (r *Reputation) FindAll(url string) (interface{}, error) {
 			userFlair += ", " + temp
 		})
 
-		fmt.Println(userName, userLocation, userFlair)
+		//fmt.Println(userName, userLocation, userFlair)
+		if i <= 10 && len(reputationResult) <= 10 {
+			oneReputation := Reputation{
+				*model.NewReputation(userName, []string{}, userLocation, userFlair),
+			}
+			reputationResult = append(reputationResult, oneReputation)
+		}
 
 	})
-
-	return Reputations{}, nil
+	infrastructure.Marshal(reputationResult)
+	return nil, nil
 }
 
 func (r *Reputation) Single(url string, number int) (interface{}, error) {

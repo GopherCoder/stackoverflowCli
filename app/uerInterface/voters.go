@@ -2,7 +2,6 @@ package uerInterface
 
 import (
 	"bytes"
-	"fmt"
 	"stackOverFlowClient/app/domain/model"
 	"stackOverFlowClient/app/infrastructure"
 
@@ -13,9 +12,14 @@ type Voters struct {
 	model.Votes
 }
 
+type VotersResult []Voters
+
 func (v *Voters) FindAll(url string) (interface{}, error) {
 	response, _ := infrastructure.ResponseStorager(url)
-	fmt.Println(string([]byte(response)))
+	//fmt.Println(string([]byte(response)))
+
+	var votersResult VotersResult
+
 	doc, _ := goquery.NewDocumentFromReader(bytes.NewReader(response))
 	doc.Find("div#user-browser div div div.user-details").Each(func(i int, selection *goquery.Selection) {
 		userName := selection.Find("a").Text()
@@ -28,9 +32,16 @@ func (v *Voters) FindAll(url string) (interface{}, error) {
 			temp := selection1.Text()
 			userFlair += ", " + temp
 		})
-		fmt.Println(userName, userLocation, userFlair)
+		//fmt.Println(userName, userLocation, userFlair)
+		if i <= 10 && len(votersResult) <= 10 {
+			oneVoters := Voters{
+				*model.NewVotes(userName, userFlair, 0),
+			}
+			votersResult = append(votersResult, oneVoters)
+		}
 
 	})
+	infrastructure.Marshal(votersResult)
 	return nil, nil
 }
 

@@ -2,7 +2,6 @@ package uerInterface
 
 import (
 	"bytes"
-	"fmt"
 	"stackOverFlowClient/app/domain/model"
 	"stackOverFlowClient/app/infrastructure"
 
@@ -13,9 +12,14 @@ type Moderators struct {
 	model.Moderators
 }
 
+type ModeratorsResult []Moderators
+
 func (m *Moderators) FindAll(url string) (interface{}, error) {
 	response, _ := infrastructure.ResponseStorager(url)
-	fmt.Println(string([]byte(response)))
+	//fmt.Println(string([]byte(response)))
+
+	var moderatorsResult ModeratorsResult
+
 	doc, _ := goquery.NewDocumentFromReader(bytes.NewReader(response))
 	doc.Find("div#user-browser div div div.user-details").Each(func(i int, selection *goquery.Selection) {
 		userName := selection.Find("a").Text()
@@ -28,8 +32,16 @@ func (m *Moderators) FindAll(url string) (interface{}, error) {
 			temp := selection1.Text()
 			userFlair += ", " + temp
 		})
-		fmt.Println(userName, userLocation, userFlair)
+		//fmt.Println(userName, userLocation, userFlair)
+		if i < 10 && len(moderatorsResult) <= 10 {
+			oneModerators := Moderators{
+				*model.NewModerators(userName, []string{}, userLocation, userFlair, ""),
+			}
+			moderatorsResult = append(moderatorsResult, oneModerators)
+		}
+
 	})
+	infrastructure.Marshal(moderatorsResult)
 	return nil, nil
 }
 

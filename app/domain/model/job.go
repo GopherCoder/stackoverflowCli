@@ -3,18 +3,19 @@ package model
 import "reflect"
 
 type Job struct {
-	Title   string   `json:"title"`
-	Company string   `json:"company"`
-	Tags    []string `json:"tags"`
-	Salary  string   `json:"salary"`
-	Date    string   `json:"date"`
+	Title   string `json:"title"`
+	Company string `json:"company"`
+	Tags    string `json:"tags"`
+	Salary  string `json:"salary"`
+	Date    string `json:"date"`
 }
 
 type JobResults []Job
 
-func NewJob(title string,
+func NewJob(
+	title string,
 	company string,
-	tags []string,
+	tags string,
 	salary string,
 	date string) *Job {
 	return &Job{
