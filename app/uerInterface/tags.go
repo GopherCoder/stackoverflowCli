@@ -2,7 +2,6 @@ package uerInterface
 
 import (
 	"bytes"
-	"fmt"
 	"stackOverFlowClient/app/domain/model"
 	"stackOverFlowClient/app/infrastructure"
 	"strconv"
@@ -32,7 +31,7 @@ func (t *Tags) FindAll(url string) (interface{}, error) {
 			tagInfo += " " + strings.TrimSpace(selection1.Text())
 		})
 
-		fmt.Println(tagName, tagNumber, tagDescription, tagInfo)
+		//fmt.Println(tagName, tagNumber, tagDescription, tagInfo)
 		newTagNumber, _ := strconv.Atoi(tagNumber)
 		if i <= 10 && len(tagsResult) <= 10 {
 			oneTag := Tags{
