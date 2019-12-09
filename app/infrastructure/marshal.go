@@ -1,9 +1,9 @@
 package infrastructure
 
 import (
+	"encoding/json"
 	"fmt"
 
-	"github.com/gin-gonic/gin/json"
 )
 
 func Marshal(value interface{}) {

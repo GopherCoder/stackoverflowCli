@@ -3,8 +3,8 @@ package uerInterface
 import (
 	"bytes"
 	"fmt"
-	"stackOverFlowClient/app/domain/model"
-	"stackOverFlowClient/app/infrastructure"
+	"github.com/wuxiaoxiaoshen/stackoverflowCli/app/domain/model"
+	"github.com/wuxiaoxiaoshen/stackoverflowCli/app/infrastructure"
 	"strconv"
 	"strings"
 

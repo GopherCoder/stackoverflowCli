@@ -2,7 +2,7 @@ package uerInterface
 
 import (
 	"fmt"
-	"stackOverFlowClient/app/infrastructure"
+	"github.com/wuxiaoxiaoshen/stackoverflowCli/app/infrastructure"
 	"testing"
 )
 

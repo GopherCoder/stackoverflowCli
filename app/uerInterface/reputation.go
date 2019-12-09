@@ -2,9 +2,9 @@ package uerInterface
 
 import (
 	"bytes"
-	"stackOverFlowClient/app/domain/model"
-	"stackOverFlowClient/app/infrastructure"
-	"stackOverFlowClient/app/infrastructure/errors"
+	"github.com/wuxiaoxiaoshen/stackoverflowCli/app/domain/model"
+	"github.com/wuxiaoxiaoshen/stackoverflowCli/app/infrastructure"
+	"github.com/wuxiaoxiaoshen/stackoverflowCli/app/infrastructure/errors"
 
 	"github.com/PuerkitoBio/goquery"
 )

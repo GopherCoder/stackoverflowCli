@@ -1,7 +1,7 @@
 package uerInterface
 
 import (
-	"stackOverFlowClient/app/infrastructure"
+	"github.com/wuxiaoxiaoshen/stackoverflowCli/stackOverFlowClient/app/infrastructure"
 	"testing"
 )
 

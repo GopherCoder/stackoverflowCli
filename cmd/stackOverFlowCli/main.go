@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"stackOverFlowClient/app/domain/repository"
-	"stackOverFlowClient/app/infrastructure"
-	"stackOverFlowClient/app/uerInterface"
+	"github.com/wuxiaoxiaoshen/stackoverflowCli/app/domain/repository"
+	"github.com/wuxiaoxiaoshen/stackoverflowCli/app/infrastructure"
+	"github.com/wuxiaoxiaoshen/stackoverflowCli/app/uerInterface"
 
 	"github.com/urfave/cli"
 )
