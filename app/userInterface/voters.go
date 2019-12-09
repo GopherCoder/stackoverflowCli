@@ -1,4 +1,4 @@
-package uerInterface
+package userInterface
 
 import (
 	"bytes"
@@ -8,17 +8,18 @@ import (
 	"github.com/PuerkitoBio/goquery"
 )
 
-type Editors struct {
-	model.Editor
+type Voters struct {
+	model.Votes
 }
 
-type EditorResult []Editors
+type VotersResult []Voters
 
-func (e *Editors) FindAll(url string) (interface{}, error) {
+func (v *Voters) FindAll(url string) (interface{}, error) {
 	response, _ := infrastructure.ResponseStorager(url)
 	//fmt.Println(string([]byte(response)))
 
-	var editorResult EditorResult
+	var votersResult VotersResult
+
 	doc, _ := goquery.NewDocumentFromReader(bytes.NewReader(response))
 	doc.Find("div#user-browser div div div.user-details").Each(func(i int, selection *goquery.Selection) {
 		userName := selection.Find("a").Text()
@@ -32,19 +33,18 @@ func (e *Editors) FindAll(url string) (interface{}, error) {
 			userFlair += ", " + temp
 		})
 		//fmt.Println(userName, userLocation, userFlair)
-		OneEditor := Editors{
-			*model.NewEditor(
-				userName, []string{}, userLocation, userFlair, 0),
-		}
-		if i < 10 {
-			editorResult = append(editorResult, OneEditor)
+		if i <= 10 && len(votersResult) <= 10 {
+			oneVoters := Voters{
+				*model.NewVotes(userName, userFlair, 0),
+			}
+			votersResult = append(votersResult, oneVoters)
 		}
 
 	})
-	infrastructure.Marshal(editorResult)
+	infrastructure.Marshal(votersResult)
 	return nil, nil
 }
 
-func (e *Editors) Single(url string, number int) (interface{}, error) {
+func (v *Voters) Single(url string, number int) (interface{}, error) {
 	return nil, nil
 }

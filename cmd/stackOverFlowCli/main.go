@@ -2,19 +2,22 @@ package main
 
 import (
 	"fmt"
-	"log"
-	"os"
 	"github.com/wuxiaoxiaoshen/stackoverflowCli/app/domain/repository"
 	"github.com/wuxiaoxiaoshen/stackoverflowCli/app/infrastructure"
 	"github.com/wuxiaoxiaoshen/stackoverflowCli/app/uerInterface"
+	"github.com/wuxiaoxiaoshen/stackoverflowCli/app/userInterface"
+	"log"
+	"os"
 
 	"github.com/urfave/cli"
 )
 
+var Application  = "stackoverflowcli"
+
 func main() {
 	app := cli.NewApp()
-	app.Name = "stackoverflowcli"
-	app.Usage = "An application for stackoverflow web site"
+	app.Name = Application
+	app.Usage = fmt.Sprintf("An application for %s web site",Application)
 	app.Action = func(c *cli.Context) error {
 		fmt.Println("boom! I say!")
 		return nil
@@ -63,7 +66,7 @@ func userSubCommand() []cli.Command {
 			Usage:   "Show stackoverflow user editor",
 			Action: func(c *cli.Context) {
 				var repo repository.StackOverFlowRepository
-				var editor uerInterface.Editors
+				var editor userInterface.Editors
 				repo = &editor
 				repo.FindAll(infrastructure.API["editors"])
 			},
@@ -73,7 +76,7 @@ func userSubCommand() []cli.Command {
 			Usage:   "Show stackoverflow user moderators",
 			Action: func(c *cli.Context) {
 				var repo repository.StackOverFlowRepository
-				var moderators uerInterface.Moderators
+				var moderators userInterface.Moderators
 				repo = &moderators
 				repo.FindAll(infrastructure.API["moderators"])
 			},
@@ -83,7 +86,7 @@ func userSubCommand() []cli.Command {
 			Usage:   "Show stackoverflow user reputation",
 			Action: func(c *cli.Context) {
 				var repo repository.StackOverFlowRepository
-				var reputation uerInterface.Reputation
+				var reputation userInterface.Reputation
 				repo = &reputation
 				repo.FindAll(infrastructure.API["reputation"])
 			},
@@ -93,7 +96,7 @@ func userSubCommand() []cli.Command {
 			Usage:   "Show stackoverflow user userNew",
 			Action: func(c *cli.Context) {
 				var repo repository.StackOverFlowRepository
-				var userNew uerInterface.UserNew
+				var userNew userInterface.UserNew
 				repo = &userNew
 				repo.FindAll(infrastructure.API["newUser"])
 			},
@@ -103,7 +106,7 @@ func userSubCommand() []cli.Command {
 			Usage:   "Show stackoverflow user voters",
 			Action: func(c *cli.Context) {
 				var repo repository.StackOverFlowRepository
-				var voters uerInterface.Voters
+				var voters userInterface.Voters
 				repo = &voters
 				repo.FindAll(infrastructure.API["voters"])
 			},
@@ -119,7 +122,7 @@ func jobSubCommand() []cli.Command {
 			Usage:   "Show stackoverflow jobs",
 			Action: func(c *cli.Context) {
 				var repo repository.StackOverFlowRepository
-				var job uerInterface.Job
+				var job userInterface.Job
 				repo = &job
 				repo.FindAll(infrastructure.API["jobs"])
 			},
@@ -135,7 +138,7 @@ func tagSubCommand() []cli.Command {
 			Usage:   "Show stackoverflow tag",
 			Action: func(c *cli.Context) {
 				var repo repository.StackOverFlowRepository
-				var tags uerInterface.Tags
+				var tags userInterface.Tags
 				repo = &tags
 				repo.FindAll(infrastructure.API["tags"])
 			},
@@ -151,7 +154,7 @@ func questionSubCommand() []cli.Command {
 			Usage:   "Show stackoverflow question",
 			Action: func(c *cli.Context) {
 				var repo repository.StackOverFlowRepository
-				var question uerInterface.Question
+				var question userInterface.Question
 				repo = &question
 				repo.FindAll(fmt.Sprintf(infrastructure.API["search"], c.Args().Get(0)))
 			},

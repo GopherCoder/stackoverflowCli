@@ -1,4 +1,4 @@
-package uerInterface
+package userInterface
 
 import (
 	"github.com/wuxiaoxiaoshen/stackoverflowCli/app/infrastructure"

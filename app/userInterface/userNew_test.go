@@ -1,21 +1,21 @@
-package uerInterface
+package userInterface
 
 import (
 	"github.com/wuxiaoxiaoshen/stackoverflowCli/app/infrastructure"
 	"testing"
 )
 
-func TestJob_FindAll(t *testing.T) {
+func TestUserNew_FindAll(t *testing.T) {
 	tt := []struct {
 		url string
 	}{
 		{
-			url: infrastructure.API["jobs"],
+			url: infrastructure.API["newUser"],
 		},
 	}
 
-	var job Job
+	var userNew UserNew
 	for _, t := range tt {
-		job.FindAll(t.url)
+		userNew.FindAll(t.url)
 	}
 }

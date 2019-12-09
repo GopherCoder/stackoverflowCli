@@ -1,21 +1,22 @@
-package uerInterface
+package userInterface
 
 import (
 	"github.com/wuxiaoxiaoshen/stackoverflowCli/app/infrastructure"
 	"testing"
 )
 
-func TestModerators_FindAll(t *testing.T) {
+func TestReputation_FindAll(t *testing.T) {
 	tt := []struct {
 		url string
 	}{
 		{
-			url: infrastructure.API["moderators"],
+			url: infrastructure.API["reputation"],
 		},
 	}
-	var moderators Moderators
+
+	var reputation Reputation
 	for _, t := range tt {
-		moderators.FindAll(t.url)
+		reputation.FindAll(t.url)
 
 	}
 }
