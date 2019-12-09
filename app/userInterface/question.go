@@ -2,7 +2,6 @@ package userInterface
 
 import (
 	"bytes"
-	"fmt"
 	"github.com/wuxiaoxiaoshen/stackoverflowCli/app/domain/model"
 	"github.com/wuxiaoxiaoshen/stackoverflowCli/app/infrastructure"
 	"strconv"
@@ -38,7 +37,7 @@ func (q *Question) FindAll(url string) (interface{}, error) {
 		} else {
 			questionType = "ask"
 		}
-		fmt.Println(newVotes, title, description, information, questionType, fullUrl)
+		//fmt.Println(newVotes, title, description, information, questionType, fullUrl)
 		newVotesInt, _ := strconv.Atoi(newVotes)
 		if i <= 10 && len(questionResult) <= 10 {
 			oneQuestion := Question{

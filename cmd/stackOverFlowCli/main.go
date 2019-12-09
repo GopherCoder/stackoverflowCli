@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"github.com/wuxiaoxiaoshen/stackoverflowCli/app/domain/repository"
 	"github.com/wuxiaoxiaoshen/stackoverflowCli/app/infrastructure"
-	"github.com/wuxiaoxiaoshen/stackoverflowCli/app/uerInterface"
 	"github.com/wuxiaoxiaoshen/stackoverflowCli/app/userInterface"
 	"log"
 	"os"

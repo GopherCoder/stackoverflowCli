@@ -2,8 +2,8 @@ package userInterface
 
 import (
 	"bytes"
-	"github.com/wuxiaoxiaoshen/stackoverflowCli/stackOverFlowClient/app/domain/model"
-	"github.com/wuxiaoxiaoshen/stackoverflowCli/stackOverFlowClient/app/infrastructure"
+	"github.com/wuxiaoxiaoshen/stackoverflowCli/app/domain/model"
+	"github.com/wuxiaoxiaoshen/stackoverflowCli/app/infrastructure"
 	"strings"
 
 	"github.com/PuerkitoBio/goquery"
